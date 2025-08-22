@@ -1,1 +1,1 @@
-web: cd backend && bundle exec rails server -p $PORT
+web: cd backend && bundle exec rails server -p $PORT -e production

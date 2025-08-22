@@ -1,0 +1,17 @@
+# Test files
+test_*.txt
+test_*.sh
+debug_*.rb
+*.tmp
+*.temp
+
+# Documentation
+MEJORAS_*.md
+ESTADO_*.md
+
+# Development files
+frontend/
+docker-compose.yml
+deploy.sh
+
+# Keep only backend for Railway deployment
