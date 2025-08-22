@@ -1,0 +1,35 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+MEJORAS_*.md
+ESTADO_*.md
+
+# Test files
+test_*.txt
+test_*.sh
+debug_*.rb
+
+# Development files
+frontend/
+docker-compose.yml
+deploy.sh
+start.sh
+
+# Railway specific
+.railwayignore
+railway.json
+nixpacks.toml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
