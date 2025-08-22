@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "AI Meeting Processor",
+    "subtitle": "Intelligent meeting processing and analysis",
+    "language": "Language"
+  },
+  "fileUpload": {
+    "title": "Upload Meeting File",
+    "meetingTitle": "Meeting Title (optional):",
+    "meetingTitlePlaceholder": "Enter meeting title (optional)",
+    "description": "The AI will analyze the file content to generate proposals, tickets and executive summaries",
+    "selectFile": "Select File:",
+    "chooseFile": "Choose File",
+    "supportedFormats": "Supported formats: Audio, Video, Text files",
+    "uploadButton": "Upload Meeting",
+    "uploading": "Uploading...",
+    "error": "Failed to create meeting. Please try again.",
+    "noFileError": "Please select a file"
+  },
+  "meetingInfo": {
+    "meeting": "Meeting",
+    "status": "Status",
+    "description": "Description",
+    "uploadNewMeeting": "Upload New Meeting"
+  },
+  "meetingActions": {
+    "title": "Generate Content",
+    "description": "Select an option to process the meeting content:",
+    "generateProposal": "📄 Generate Proposal",
+    "generateJiraTickets": "🎫 Generate Jira Tickets",
+    "generateExecutiveSummary": "📋 Generate Executive Summary",
+    "generating": "Generating...",
+    "error": "Failed to start {{type}} processing. Please try again."
+  },
+  "processingStatus": {
+    "title": "Processing Status",
+    "loading": "Loading processing status...",
+    "additionalActions": "Generate Additional Content",
+    "noJobs": "No processing jobs found.",
+    "jobTypes": {
+      "proposal": "Proposal Generation",
+      "jira_ticket": "Jira Tickets Generation",
+      "executive_summary": "Executive Summary Generation"
+    },
+    "statuses": {
+      "pending": "PENDING",
+      "processing": "PROCESSING",
+      "completed": "COMPLETED",
+      "failed": "FAILED"
+    },
+    "result": "Result:",
+    "error": "Error:",
+    "translateToSpanish": "Translate to Spanish",
+    "translateToEnglish": "Translate to English",
+    "languageMismatch": "Content is not in the selected language",
+    "languageMismatchTitle": "Content in different language",
+    "languageMismatchDescription": "Some results are in a different language than selected. Click the buttons to translate them."
+  },
+  "languageSelector": {
+    "title": "Language",
+    "english": "English",
+    "spanish": "Spanish"
+  }
+}

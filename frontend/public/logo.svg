@@ -1,0 +1,22 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="20" cy="20" r="18" fill="url(#gradient)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  
+  <!-- S letter -->
+  <path d="M12 12C12 10.8954 12.8954 10 14 10H26C27.1046 10 28 10.8954 28 12V16C28 17.1046 27.1046 18 26 18H14C12.8954 18 12 17.1046 12 16V14C12 12.8954 12.8954 12 14 12H26C27.1046 12 28 12.8954 28 14V16" stroke="white" stroke-width="2" fill="none"/>
+  
+  <!-- O letter -->
+  <ellipse cx="20" cy="28" rx="6" ry="4" stroke="white" stroke-width="2" fill="none"/>
+  
+  <!-- Text "AI Meeting Processor" -->
+  <text x="45" y="25" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">AI Meeting</text>
+  <text x="45" y="40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Processor</text>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

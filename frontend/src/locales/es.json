@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "AI Meeting Processor",
+    "subtitle": "Procesamiento inteligente y análisis de reuniones",
+    "language": "Idioma"
+  },
+  "fileUpload": {
+    "title": "Subir Archivo de Reunión",
+    "meetingTitle": "Título de la Reunión (opcional):",
+    "meetingTitlePlaceholder": "Ingresa el título de la reunión (opcional)",
+    "description": "La IA analizará el contenido del archivo para generar propuestas, tickets y resúmenes ejecutivos",
+    "selectFile": "Seleccionar Archivo:",
+    "chooseFile": "Elegir Archivo",
+    "supportedFormats": "Formatos soportados: Audio, Video, archivos de texto",
+    "uploadButton": "Subir Reunión",
+    "uploading": "Subiendo...",
+    "error": "Error al crear la reunión. Por favor intenta de nuevo.",
+    "noFileError": "Por favor selecciona un archivo"
+  },
+  "meetingInfo": {
+    "meeting": "Reunión",
+    "status": "Estado",
+    "description": "Descripción",
+    "uploadNewMeeting": "Subir Nueva Reunión"
+  },
+  "meetingActions": {
+    "title": "Generar Contenido",
+    "description": "Selecciona una opción para procesar el contenido de la reunión:",
+    "generateProposal": "📄 Generar Propuesta",
+    "generateJiraTickets": "🎫 Generar Tickets Jira",
+    "generateExecutiveSummary": "📋 Generar Resumen Ejecutivo",
+    "generating": "Generando...",
+    "error": "Error al iniciar el procesamiento de {{type}}. Por favor intenta de nuevo."
+  },
+  "processingStatus": {
+    "title": "Estado del Procesamiento",
+    "loading": "Cargando estado del procesamiento...",
+    "additionalActions": "Generar Contenido Adicional",
+    "noJobs": "No se encontraron trabajos de procesamiento.",
+    "jobTypes": {
+      "proposal": "Generación de Propuesta",
+      "jira_ticket": "Generación de Tickets Jira",
+      "executive_summary": "Generación de Resumen Ejecutivo"
+    },
+    "statuses": {
+      "pending": "PENDIENTE",
+      "processing": "PROCESANDO",
+      "completed": "COMPLETADO",
+      "failed": "FALLIDO"
+    },
+    "result": "Resultado:",
+    "error": "Error:",
+    "translateToSpanish": "Traducir al español",
+    "translateToEnglish": "Traducir al inglés",
+    "languageMismatch": "El contenido no está en el idioma seleccionado",
+    "languageMismatchTitle": "Contenido en idioma diferente",
+    "languageMismatchDescription": "Algunos resultados están en un idioma diferente al seleccionado. Haz clic en los botones para traducirlos."
+  },
+  "languageSelector": {
+    "title": "Idioma",
+    "english": "Inglés",
+    "spanish": "Español"
+  }
+}

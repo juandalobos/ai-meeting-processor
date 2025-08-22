@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meeting: one
+  job_type: MyString
+  status: MyString
+  result: MyText
+
+two:
+  meeting: two
+  job_type: MyString
+  status: MyString
+  result: MyText
