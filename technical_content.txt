@@ -1,0 +1,6 @@
+Archivo de video: meeting_recording.mp4
+Duración: 45.2 segundos
+Resolución: 1920x1080
+Audio: Sí detectado
+File size: 15.2 MB
+Content-Type: video/mp4
