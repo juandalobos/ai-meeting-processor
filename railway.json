@@ -1,14 +1,11 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "cd backend && bundle install && bundle exec rails assets:precompile"
+    "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "cd backend && bundle exec rails server -p $PORT",
+    "startCommand": "cd backend && bundle exec rails server -p $PORT -e production",
     "healthcheckPath": "/api/health",
-    "healthcheckTimeout": 100,
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
+    "healthcheckTimeout": 100
   }
 }
