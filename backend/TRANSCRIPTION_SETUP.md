@@ -1,120 +1,148 @@
-# Configuración de Transcripción Automática de Videos
+# Configuración de Transcripción de Audio/Video
 
-## 🎯 Funcionalidad Implementada
+Este sistema ahora incluye capacidades completas de transcripción automática de audio y video usando múltiples servicios.
 
-El sistema ahora puede procesar automáticamente videos y audio para generar transcripciones usando IA, sin necesidad de transcripción manual.
+## 🚀 Servicios de Transcripción Disponibles
 
-## 🔧 Servicios de Transcripción Soportados
-
-### 1. **OpenAI Whisper API** (Recomendado)
+### 1. OpenAI Whisper API (Recomendado)
 - **Ventajas**: Alta precisión, soporte multiidioma, fácil configuración
-- **Costo**: ~$0.006 por minuto de audio
+- **Costo**: ~$0.006 por minuto
 - **Configuración**: Solo necesitas una API key de OpenAI
 
-### 2. **Google Speech-to-Text** (Alternativa)
-- **Ventajas**: Muy preciso, bueno para español
+### 2. AWS Transcribe
+- **Ventajas**: Integración con AWS, procesamiento asíncrono
+- **Costo**: ~$0.024 por minuto
+- **Configuración**: Requiere credenciales AWS y bucket S3
+
+### 3. Google Speech-to-Text
+- **Ventajas**: Alta precisión, múltiples idiomas
 - **Costo**: ~$0.006 por minuto
 - **Configuración**: Requiere credenciales de Google Cloud
 
-### 3. **Azure Speech Services** (Alternativa)
-- **Ventajas**: Integración con Microsoft, bueno para empresas
-- **Costo**: ~$0.006 por minuto
-- **Configuración**: Requiere clave de Azure
+## 🔧 Configuración Rápida
 
-### 4. **Fallback con Gemini** (Sin costo adicional)
-- **Ventajas**: Usa la API de Gemini que ya tienes
-- **Limitaciones**: No es transcripción real, sino generación basada en metadatos
-- **Configuración**: No requiere configuración adicional
+### Opción 1: OpenAI Whisper (Más Fácil)
 
-## 🚀 Configuración Rápida (Whisper API)
-
-### Paso 1: Obtener API Key de OpenAI
-1. Ve a [OpenAI Platform](https://platform.openai.com/)
-2. Crea una cuenta o inicia sesión
-3. Ve a "API Keys" y crea una nueva clave
-4. Copia la clave
-
-### Paso 2: Configurar Variables de Entorno
-1. Crea un archivo `.env` en la carpeta `backend/`
-2. Agrega tu API key:
-
+1. Ve a https://platform.openai.com
+2. Crea una cuenta y obtén una API key
+3. Agrega al archivo `.env`:
 ```bash
-# API Keys for AI Services
-GEMINI_API_KEY=tu_gemini_api_key_aqui
-OPENAI_API_KEY=tu_openai_api_key_aqui
+OPENAI_API_KEY=sk-tu-api-key-aqui
 ```
 
-### Paso 3: Reiniciar el Servidor
+### Opción 2: AWS Transcribe
+
+1. Crea una cuenta en AWS
+2. Crea un bucket S3 para transcripciones
+3. Crea un usuario IAM con permisos para Transcribe y S3
+4. Agrega al archivo `.env`:
 ```bash
-cd backend
-bundle exec rails server -p 3001
+AWS_ACCESS_KEY_ID=tu-access-key
+AWS_SECRET_ACCESS_KEY=tu-secret-key
+AWS_REGION=us-east-1
+AWS_S3_BUCKET=tu-bucket-name
 ```
 
-## 📋 Flujo de Procesamiento
+### Opción 3: Google Speech-to-Text
 
-1. **Subir Video**: El usuario sube un archivo de video
-2. **Detección de Audio**: El sistema detecta si el video tiene audio
-3. **Transcripción Automática**: 
-   - Si tiene Whisper API: Usa Whisper para transcripción real
-   - Si no tiene: Usa Gemini para generar contenido basado en metadatos
-4. **Análisis de Contenido**: La IA analiza la transcripción
-5. **Generación de Resultados**: Crea propuestas, tickets Jira, y resúmenes
+1. Crea un proyecto en Google Cloud
+2. Habilita Speech-to-Text API
+3. Crea una cuenta de servicio y descarga las credenciales JSON
+4. Agrega al archivo `.env`:
+```bash
+GOOGLE_CLOUD_CREDENTIALS={"type":"service_account",...}
+```
 
-## 💡 Ventajas del Sistema
+## 📁 Archivos Soportados
 
-### ✅ **Procesamiento Automático**
-- No requiere transcripción manual
-- Procesa videos de cualquier duración
-- Soporte para múltiples idiomas
+### Video
+- MP4, AVI, MOV, MKV
+- Cualquier formato que contenga audio
 
-### ✅ **Fallback Inteligente**
-- Si falla la transcripción, usa metadatos del video
-- Proporciona resultados útiles incluso sin transcripción perfecta
-- Mensajes informativos para el usuario
+### Audio
+- MP3, WAV, M4A, FLAC
+- Formatos comprimidos y sin comprimir
 
-### ✅ **Interfaz Mejorada**
-- Indicadores de progreso claros
-- Opciones de transcripción manual como respaldo
-- Enlaces directos a herramientas externas
+### Texto
+- TXT, PDF
+- Transcripciones manuales
 
-## 🔍 Ejemplo de Uso
+## 🔄 Flujo de Procesamiento
 
-1. **Subir Video**: `Sync - Appoiments con datos duplicados.mp4`
-2. **Procesamiento Automático**: 
-   - Extrae audio del video
-   - Transcribe con Whisper API
-   - Analiza contenido sobre "datos duplicados"
-3. **Resultados Generados**:
-   - Propuesta de solución
-   - Tickets Jira para implementar mejoras
-   - Resumen ejecutivo de la reunión
+1. **Subida de archivo**: El sistema detecta automáticamente el tipo de archivo
+2. **Transcripción**: Se usa el mejor servicio disponible
+3. **Análisis**: Gemini procesa la transcripción para generar:
+   - Resumen ejecutivo
+   - Propuestas técnicas
+   - Tickets de Jira
+4. **Resultados**: Se muestran en la interfaz web
 
-## 🛠️ Solución de Problemas
+## 🛠️ Instalación de Dependencias
 
-### Error: "OpenAI API key not found"
-- Verifica que `OPENAI_API_KEY` esté en tu archivo `.env`
-- Reinicia el servidor después de agregar la variable
+```bash
+# Instalar ffmpeg (para procesamiento local)
+# macOS
+brew install ffmpeg
+
+# Ubuntu/Debian
+sudo apt update
+sudo apt install ffmpeg
+
+# Windows
+# Descarga desde https://ffmpeg.org/download.html
+```
+
+## 🧪 Pruebas
+
+Para probar la transcripción:
+
+1. Configura al menos una API key
+2. Sube un archivo de video/audio
+3. El sistema transcribirá automáticamente
+4. Generará análisis completos
+
+## 📊 Monitoreo
+
+Los logs muestran:
+- Método de transcripción usado
+- Duración del proceso
+- Longitud de la transcripción
+- Errores si ocurren
+
+## 🔒 Seguridad
+
+- Los archivos se procesan temporalmente
+- Se eliminan automáticamente después del procesamiento
+- Las API keys se almacenan de forma segura
+- No se almacenan transcripciones permanentemente
+
+## 🆘 Solución de Problemas
+
+### Error: "No transcription APIs available"
+- Configura al menos una API key
+- Verifica que las credenciales sean correctas
 
 ### Error: "Transcription failed"
-- Verifica que el video tenga audio
-- Asegúrate de que la API key tenga créditos disponibles
-- Revisa los logs del servidor para más detalles
+- Verifica que el archivo contenga audio
+- Asegúrate de que el formato sea compatible
+- Revisa los logs para más detalles
 
-### Video sin audio
-- El sistema detectará automáticamente videos sin audio
-- Proporcionará opciones alternativas al usuario
+### Error: "File too large"
+- Los archivos grandes pueden tardar más
+- Considera dividir archivos muy largos
 
-## 📊 Costos Estimados
+## 💡 Consejos
 
-- **Whisper API**: ~$0.006 por minuto de audio
-- **Video de 26 minutos**: ~$0.16 por transcripción
-- **100 videos por mes**: ~$16 USD
+1. **OpenAI Whisper** es la opción más fácil y económica
+2. Para archivos grandes, usa **AWS Transcribe** (procesamiento asíncrono)
+3. Para múltiples idiomas, **Google Speech-to-Text** es excelente
+4. Siempre verifica que el archivo contenga audio válido
+5. Los formatos MP4 y MP3 funcionan mejor
 
-## 🎯 Próximos Pasos
+## 📞 Soporte
 
-1. **Configurar Whisper API** para transcripción real
-2. **Probar con tu video** actual
-3. **Ajustar prompts** según tus necesidades específicas
-4. **Considerar Google Speech-to-Text** si necesitas mayor precisión en español
-
-¡El sistema ahora procesa videos automáticamente! 🎉
+Si tienes problemas:
+1. Revisa los logs en `log/development.log`
+2. Verifica la configuración de las API keys
+3. Asegúrate de que ffmpeg esté instalado
+4. Prueba con archivos más pequeños primero

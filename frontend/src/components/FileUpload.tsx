@@ -38,22 +38,27 @@ const FileUpload: React.FC<FileUploadProps> = ({ onMeetingCreated }) => {
       formData.append('meeting[title]', title || 'Untitled Meeting');
       formData.append('meeting[file]', file);
 
+      // Subir archivo y esperar respuesta
       const meeting = await meetingsApi.create(formData);
-
-      onMeetingCreated(meeting);
       
-      // Reset form
+      // Solo resetear campos si la subida fue exitosa
       setTitle('');
       setFile(null);
       const fileInput = document.getElementById('file-input') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
+      
+      // Notificar que se creó exitosamente
+      onMeetingCreated(meeting);
       
     } catch (err: any) {
       console.error('Error creating meeting:', err);
       
       let errorMessage = t('fileUpload.error');
       
-      if (err.response?.data?.errors) {
+      // Manejar errores específicos
+      if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        errorMessage = 'El archivo es muy grande. El sistema lo procesará en segundo plano. Revisa el estado en unos minutos.';
+      } else if (err.response?.data?.errors) {
         errorMessage = Array.isArray(err.response.data.errors) 
           ? err.response.data.errors.join(', ')
           : err.response.data.errors;

@@ -7,11 +7,17 @@ Rails.application.routes.draw do
     resources :meetings do
       member do
         post :process_content
+        get :processing_status
+        post :translate_result
       end
     end
     
     resources :business_contexts
-    resources :processing_jobs, only: [:index, :show]
+    resources :processing_jobs, only: [:index, :show] do
+      collection do
+        get :meeting_jobs
+      end
+    end
   end
   
   # Root route

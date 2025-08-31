@@ -44,8 +44,29 @@ class Api::MeetingsController < ApplicationController
       return render json: { error: 'Idioma inválido' }, status: :bad_request
     end
     
-    # Para testing, procesamos inmediatamente en lugar de usar background job
-    if Rails.env.development? && params[:sync] == 'true'
+    # Para videos, usar procesamiento específico de video
+    if meeting.file.attached? && video_file?(meeting.file)
+      Rails.logger.info "Video detected, using video processing"
+      ProcessMeetingJob.perform_later(meeting.id, job_type, language)
+      render json: { 
+        message: 'Procesamiento de video iniciado', 
+        job_type: job_type,
+        file_size: meeting.file.byte_size,
+        file_type: 'video',
+        estimated_time: '1-3 minutos'
+      }
+    # Para archivos grandes (no videos), usar procesamiento de archivos grandes
+    elsif meeting.file.attached? && meeting.file.byte_size > 5.megabytes
+      Rails.logger.info "Large file detected, using large file processing"
+      ProcessLargeFileJob.perform_later(meeting.id, job_type, language)
+      render json: { 
+        message: 'Procesamiento de archivo grande iniciado', 
+        job_type: job_type,
+        file_size: meeting.file.byte_size,
+        estimated_time: '2-5 minutos'
+      }
+    elsif Rails.env.development? && params[:sync] == 'true'
+      # Solo para archivos pequeños en desarrollo
       begin
         gemini_service = GeminiService.new
         result = gemini_service.process_meeting_content(meeting, job_type, nil, language)
@@ -58,8 +79,19 @@ class Api::MeetingsController < ApplicationController
         render json: { error: e.message }, status: :internal_server_error
       end
     else
-      ProcessMeetingJob.perform_later(meeting.id, job_type, language)
-      render json: { message: 'Procesamiento iniciado', job_type: job_type }
+      # Usar job específico para archivos grandes
+      if meeting.file.attached? && meeting.file.byte_size > 10.megabytes
+        ProcessLargeFileJob.perform_later(meeting.id, job_type, language)
+        render json: { 
+          message: 'Procesamiento de archivo grande iniciado', 
+          job_type: job_type,
+          file_size: meeting.file.byte_size,
+          estimated_time: '5-15 minutos'
+        }
+      else
+        ProcessMeetingJob.perform_later(meeting.id, job_type, language)
+        render json: { message: 'Procesamiento iniciado', job_type: job_type }
+      end
     end
   end
 
@@ -96,10 +128,44 @@ class Api::MeetingsController < ApplicationController
       render json: { error: e.message }, status: :internal_server_error
     end
   end
+
+  def processing_status
+    meeting = Meeting.find(params[:id])
+    
+    render json: {
+      meeting_id: meeting.id,
+      status: meeting.status,
+      file_size: meeting.file.attached? ? meeting.file.byte_size : nil,
+      is_large_file: meeting.file.attached? && meeting.file.byte_size > 10.megabytes,
+      processing_jobs: meeting.processing_jobs.map do |job|
+        {
+          job_type: job.job_type,
+          status: job.status,
+          created_at: job.created_at,
+          updated_at: job.updated_at,
+          has_result: job.result.present?
+        }
+      end
+    }
+  end
   
   private
   
   def meeting_params
     params.require(:meeting).permit(:title, :file)
+  end
+  
+  def video_file?(file)
+    video_types = [
+      'video/mp4',
+      'video/avi',
+      'video/mov',
+      'video/wmv',
+      'video/flv',
+      'video/webm',
+      'video/mkv',
+      'video/m4v'
+    ]
+    video_types.include?(file.content_type)
   end
 end

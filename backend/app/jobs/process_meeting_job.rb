@@ -8,8 +8,16 @@ class ProcessMeetingJob < ApplicationJob
     begin
       processing_job.update(status: 'processing')
       
-      gemini_service = GeminiService.new
-      result = gemini_service.process_meeting_content(meeting, job_type, nil, language)
+      # Detectar si es un video y usar el procesador específico
+      if meeting.file.attached? && video_file?(meeting.file)
+        Rails.logger.info "Processing video file with VideoProcessorService"
+        video_processor = VideoProcessorService.new
+        result = video_processor.process_video(meeting.file, job_type, language)
+      else
+        # Procesamiento normal para otros tipos de archivo
+        gemini_service = GeminiService.new
+        result = gemini_service.process_meeting_content(meeting, job_type, nil, language)
+      end
       
       processing_job.update(
         status: 'completed',
@@ -45,5 +53,21 @@ class ProcessMeetingJob < ApplicationJob
       Rails.logger.error "Processing job failed: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
     end
+  end
+  
+  private
+  
+  def video_file?(file)
+    video_types = [
+      'video/mp4',
+      'video/avi',
+      'video/mov',
+      'video/wmv',
+      'video/flv',
+      'video/webm',
+      'video/mkv',
+      'video/m4v'
+    ]
+    video_types.include?(file.content_type)
   end
 end

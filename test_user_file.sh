@@ -87,3 +87,5 @@ else
     echo "❌ Error en el procesamiento"
     echo "Respuesta: $processing_response"
 fi
+
+

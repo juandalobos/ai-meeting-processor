@@ -105,3 +105,5 @@ echo "  - minimal_content.txt"
 echo "  - technical_with_content.txt"
 echo "  - short_but_meaningful.txt"
 echo "🌐 Para ver resultados completos, visita: http://localhost:3000"
+
+

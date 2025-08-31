@@ -12,19 +12,19 @@ COPY Gemfile Gemfile.lock ./
 # Install gems
 RUN bundle install
 
-# Copy the rest of the application
-COPY . .
+# Copy the backend directory
+COPY backend/ ./backend/
+
+# Set working directory to backend
+WORKDIR /app/backend
 
 # Set environment variables
 ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 
-# Precompile assets
-RUN cd backend && bundle exec rails assets:precompile
-
 # Expose port
 EXPOSE $PORT
 
 # Start the application
-CMD cd backend && bundle exec rails server -p $PORT -e production
+CMD bundle exec rails server -p $PORT -e production

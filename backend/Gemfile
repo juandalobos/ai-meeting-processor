@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
 # Use sqlite3 as the database for Active Record in development
-gem "sqlite3", "~> 1.7.3", groups: [:development, :test]
+gem "sqlite3", "~> 2.1", groups: [:development, :test]
 # Use postgresql as the database for Active Record in production
 gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
@@ -54,3 +54,8 @@ gem "redis"
 gem "dotenv-rails"
 gem "pdf-reader"
 gem "ruby-openai"
+gem "streamio-ffmpeg"
+gem "aws-sdk-transcribeservice"
+gem "google-cloud-speech"
+gem "docx"
+gem "openai"
